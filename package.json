@@ -1,0 +1,11 @@
+{
+    "name": "library-rest-api",
+    "version": "0.0.1",
+    "main": "server.js",
+    "description": "A simple library REST api",
+    "dependencies": {        
+        "oriento": "~0.4.0",
+        "config": "~1.1.0",
+        "restly": "~0.1.3"
+    }
+}

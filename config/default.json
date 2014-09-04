@@ -1,0 +1,18 @@
+{
+    //default DB config for OrientDB
+    "dbConfig": {
+        "main" : {
+            "dbHostName": "localhost",
+            "dbPort": 2424,
+            "dbName": "gratefulDeadConcerts",
+            "dbUserName": "root",
+            "dbUserPassword": "root"
+
+            },
+        "products" : {
+            "dbName" : "acmeProducts",
+            "dbUserName": "admin",
+            "dbUserPassword": "admin"
+        }
+    }
+}
