@@ -1,10 +1,3 @@
-var getOneProduct = function(opts, callback) {
-    return callback(null, {foo: opts.id});
-}
-
-module.exports = {
-    getOneProduct: getOneProduct
-}
 
 var getAllProducts = function(opts, callback) {
     EWA.db.select().from('Products').all()
@@ -20,7 +13,7 @@ module.exports = {
     getAllProducts: getAllProducts
 }
 
-var getExample = function(opts, callback) {
+var getProduct = function(opts, callback) {
   EWA.db.record.get('#12:' + opts.id)
     .error(function (e) {
         return callback({error: 'Database error: No such record'}, null);
@@ -31,5 +24,5 @@ var getExample = function(opts, callback) {
 }
 
 module.exports = {
-  getExample: getExample
+  getProduct: getProduct
 }

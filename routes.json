@@ -1,31 +1,13 @@
 {
   "routes": [
     {
-      "title": "Method to get a single Product by ID",
-      "description": "Returns a Product provide its ID",
-      "section": "ProductCatalogue",
-      "endpoint": "/oneproduct",
-      "method": "get",
-      "library": "products.js",
-      "callback": "getOneProduct",
-      "parameters": {
-        "id": {
-          "required": true,
-          "type": "int",
-          "regex": false,
-          "description":"Product ID",
-          "example":"1"
-        }
-      }
-    },
-    {
-      "title": "Example API call",
-      "description": "Example API call",
+      "title": "Method to get a single Product",
+      "description": "Returns a single product",
       "section": "General API Calls",
-      "endpoint": "/example",
+      "endpoint": "/product",
       "method": "get",
       "library": "products.js",
-      "callback": "getExample",
+      "callback": "getProduct",
       "parameters": {
         "id": {
           "required": true,
@@ -39,7 +21,7 @@
     {
       "title": "Method to get all Products",
       "description": "Returns all Products no paging is supported",
-      "section": "ProductCatalogue",
+      "section": "General API Calls",
       "endpoint": "/products",
       "method": "get",
       "library": "products.js",
