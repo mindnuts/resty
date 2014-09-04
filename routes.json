@@ -1,8 +1,26 @@
 {
   "routes": [
     {
-      "title": "Method to get a single Product",
-      "description": "Returns a single product",
+      "title": "Method to get a single Product by ID",
+      "description": "Returns a Product provide its ID",
+      "section": "General API Calls",
+      "endpoint": "/example",
+      "method": "get",
+      "library": "products.js",
+      "callback": "getExample",
+      "parameters": {
+        "foo": {
+          "required": true,
+          "type": "string",
+          "regex": false,
+          "description":"dasfd",
+          "example":"dasfs"
+        }
+      }
+    },
+    {
+      "title": "Example API call",
+      "description": "Example API call",
       "section": "General API Calls",
       "endpoint": "/product",
       "method": "get",

@@ -1,4 +1,13 @@
 
+var getExample = function(opts, callback) {
+    return callback(null, {foo: opts.id});
+}
+
+
+module.exports = {
+    getExample: getExample
+}
+
 var getAllProducts = function(opts, callback) {
     EWA.db.select().from('Products').all()
     .error(function (e) {
