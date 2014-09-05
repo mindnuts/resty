@@ -1,21 +1,29 @@
 module.exports = function() {
     var EWA = {};//global object with our own namespace
-    // Module dependencies.
-    EWA.config = require('config');//config middleware
-    EWA.application_root = __dirname;
-    //EWA.bodyParser = require('body-parser'); //body parser
+    EWA.port = process.env.PORT || 8080;        // set our port
+    EWA.application_root = "../" + __dirname;
 
-    EWA.dbConfig = EWA.config.get('dbConfig');
+    EWA.http = require('http');
+    EWA.express = require('express');
+    // Load express-resource BEFORE app is instantiated
+    EWA.resource = require('express-resource');
+    EWA.dateFormat = require('dateformat');
 
-    EWA.Oriento =  require('oriento');
+    EWA.app = EWA.express();
+
+    //EWA.app.use(EWA.app.router);
 
     //express settings
-
     // configure app to use bodyParser()
     // this will let us get the data from a POST
-    //EWA.app.use(EWA.bodyParser.urlencoded({ extended: true }));
-    //EWA.app.use(EWA.bodyParser.json());
-
+    EWA.bodyParser = require('body-parser'); //body parser
+    EWA.app.use(EWA.bodyParser.urlencoded({ extended: true }));
+    EWA.app.use(EWA.bodyParser.json());
+    
+    // Module dependencies.
+    EWA.config = require('config');//config middleware
+    EWA.dbConfig = EWA.config.get('dbConfig');
+    EWA.Oriento =  require('oriento');
     EWA.server = EWA.Oriento({
       host: EWA.dbConfig.main.dbHostName,
       port: EWA.dbConfig.main.dbPort,
@@ -27,9 +35,6 @@ module.exports = function() {
     EWA.db = EWA.server.use({
       name: EWA.dbConfig.products.dbName,
     });
-
-    EWA.port = process.env.PORT || 8080;        // set our port
+    
     return EWA;
-    //Router
-    //EWA.router = EWA.express.Router();
 };
