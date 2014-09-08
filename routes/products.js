@@ -52,6 +52,7 @@ exports.create = function(req, res) {
 };
 
 exports.show = function(req, res) {
+console.log(req.params.product);
   EWA.db.record.get('#12:' + req.params.product)
     .error(function (e) {
         res.status(500).send('Database error: No such record');
@@ -70,17 +71,96 @@ exports.edit = function(req, res) {
 /*
 @Abstract Method to edit a product
 @Method PUT
-@Data data = {name: 'New name'}
+@Data data = {name: 'New name', stock_quantity: stock_quantity}
 */
 exports.update = function(req, res) {
+    //console.log(req.params.product);
+
+    var productId = '#12:' + req.params.product;
+
     var data = JSON.parse(req.body.data);
-    EWA.db.update('Products').set({name: data.name}).where({'@rid' : '#12:' + req.params.product}).scalar()
+
+    var now = new Date();
+    var updateTimeStamp = EWA.dateFormat(now, "yyyy-dd-mm HH:mm:ss");   
+
+    EWA.db.record.get('#12:' + req.params.product)
+    .then(function (record) {
+        
+        //console.log(JSON.stringify(record));
+
+        if(data.name)
+            record.name = data.name;
+        if(data.stock_quantity)
+        {
+            record.stock_quantity = data.stock_quantity;
+            record.stock_details.quantity = data.stock_quantity;
+            record.stock_details.stock_updated_date_time = updateTimeStamp;
+
+        }
+        if(data.product_code)
+            record.product_code = data.product_code;
+        if(data.description)
+            record.description = data.description;
+        if(data.sku)
+            record.sku = data.sku;
+
+        var foo = {
+                stock_quantity: record.stock_quantity,
+                description: record.description,
+                product_code: record.product_code,
+                name: record.name,
+                sku: record.sku,
+                stock_details: { 
+                        "@type": "d",
+                        "@class" : "Stock",
+                        "stock_updated_date_time" : record.stock_details.stock_updated_date_time,
+                        "stock_created_date_time" : record.stock_details.stock_created_date_time,
+                        "quantity" : record.stock_details.quantity,
+                        "@version" : 0 
+                    },          
+                rid: productId    
+            };
+
+            //console.log(JSON.stringify(foo));
+            //console.log(updateTimeStamp);
+
+
+        EWA.db.query('update Products set stock_quantity= :stock_quantity, description= :description, product_code= :product_code, name= :name, sku= :sku, stock_details= :stock_details where @RID= :rid',
+        {
+            params: foo
+        }
+        ).error(function (e) {
+            res.status(500).send('Database error: Could not update product');
+        })
+        .then(function (total) {
+            res.send('updated total ' + total + " record(s)");
+        });
+
+        
+           
+       
+    }).error(function (e) {
+            res.status(500).send('Database error: Could not update product');
+        })
+    /*.then(function (total) {
+      res.send('updated total ' + total + " record(s)");
+    })*/
+    ;
+   
+    
+    
+
+   /*
+    var data = JSON.parse(req.body.data);
+    EWA.db.update('Products').set({name: data.name, stock_quantity: data.stock_quantity}).where({'@rid' : '#12:' + req.params.product}).scalar()
     .error(function (e) {
             res.status(500).send('Database error: Could not update product');
         })
     .then(function (total) {
       res.send('updated total ' + total + " record(s)");
     });
+    */
+   
 };
 
 /*
