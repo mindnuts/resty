@@ -98,7 +98,6 @@ exports.edit = function(req, res) {
  */
 
 exports.update = function(req, res) {
-    //console.log(req.params.product);
 
     var productId = '#12:' + req.params.product;
 
