@@ -10,5 +10,9 @@
         "express-resource": "~1.0.0",
         "body-parser": "~1.7.0",
         "dateformat": "~1.0.8-1.2.3"
+        
+    },
+    "devDependencies": {
+        "jsdoc": "~3.3.0-alpha9"
     }
 }

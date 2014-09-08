@@ -1,3 +1,11 @@
+/**
+ * @example
+ * GET http://localhost:8080/products/
+ * @description Lists all the Products in the system
+ * @param {Object} req - The request Object.
+ * @param {Object} res - The response Object.
+ * @return void
+ */
 exports.index = function(req, res) {
   EWA.db.select().from('Products').all()
     .error(function (e) {
@@ -12,11 +20,15 @@ exports.new = function(req, res) {
     res.send('form for new user');
 };
 
-/*
-@Abstract creates a new product
-@Method = POST
-@Data data = {"stock_quantity": 5, "description": "Dell USB keyboard with 105 keys, chiclet style keyboard", "product_code": "dellKB1884", "name": "Dell 420 Key board", "sku": "dell387HUF6JKH"}
-*/
+/**
+ * @example
+ * POST http://localhost:8080/products/
+ * data = {"stock_quantity": 5, "description": "Dell USB keyboard with 105 keys, chiclet style keyboard", "product_code": "dellKB1884", "name": "Dell 420 Key board", "sku": "dell387HUF6JKH"}
+ * @description creates a new product
+ * @param {Object} req - The request Object.
+ * @param {Object} res - The response Object.
+ * @return void
+ */
 exports.create = function(req, res) {
     var data = JSON.parse(req.body.data);
     var now = new Date();
@@ -51,6 +63,14 @@ exports.create = function(req, res) {
     });
 };
 
+/**
+ * @example
+ * GET http://localhost:8080/products/1 
+ * @description Fetches a product provided the ID
+ * @param {Object} req - The request Object.
+ * @param {Object} res - The response Object.
+ * @return void
+ */
 exports.show = function(req, res) {
 console.log(req.params.product);
   EWA.db.record.get('#12:' + req.params.product)
@@ -67,12 +87,16 @@ exports.edit = function(req, res) {
   res.send('form to edit user ' + req.params.product);
 };
 
+/**
+ * @example
+ * PUT http://localhost:8080/products/1
+ * DATA data = {name: 'New name'}
+ * @description Updates a product provided the ID
+ * @param {Object} req - The request Object.
+ * @param {Object} res - The response Object.
+ * @return void
+ */
 
-/*
-@Abstract Method to edit a product
-@Method PUT
-@Data data = {name: 'New name', stock_quantity: stock_quantity}
-*/
 exports.update = function(req, res) {
     //console.log(req.params.product);
 
@@ -163,11 +187,14 @@ exports.update = function(req, res) {
    
 };
 
-/*
-@Abstract Method to delete a Product
-@Method DELETE
-@Data void
-*/
+/**
+ * @example
+ * DELETE http://localhost:8080/products/1
+ * @description Deletes a product provided the ID
+ * @param {Object} req - The request Object.
+ * @param {Object} res - The response Object.
+ * @return void
+ */
 exports.destroy = function(req, res) {  
   EWA.db.delete().from('Products').where({'@rid' : '#12:' + req.params.product}).limit(1).scalar()
     .error(function (e) {
